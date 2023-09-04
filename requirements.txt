@@ -1,4 +1,7 @@
 pymongo[srv]
 certifi
-
+from_root
+pandas 
+numpy
+scikit-learn
 -e .
