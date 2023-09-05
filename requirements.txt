@@ -4,4 +4,6 @@ from_root
 pandas 
 numpy
 scikit-learn
+scipy
+PyYAML
 -e .
