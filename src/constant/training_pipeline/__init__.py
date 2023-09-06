@@ -39,3 +39,12 @@ Data Transoformation related constant start with DATA_TRANSFORMATION VAR NAME
 DATA_TRANSFORMATION_DIR_NAME: str = "data_transformation"
 DATA_TRANSFORMATION_DATA_DIR: str = 'transformed'
 DATA_TRANSFORMATION_TRANSFORMED_DIR: str = 'transformed_objects'
+
+"""
+Model Trainer related constant start with MODEL TRAINER VAR NAME
+"""
+MODEL_TRAINER_DIR_NAME: str = "model_trainer"
+MODEL_TRAINER_TRAINED_MODEL_DIR: str = 'trained_models'
+MODEL_TRAINER_TRAINED_MODEL_NAME: str = "model.pkl"
+MODEL_TRAINER_EXPECTED_SCORE: float = 0.6
+MODEL_TRAINER_OVER_FITING_UNDER_FITING_THRESHOLD: float = 0.02
