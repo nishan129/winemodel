@@ -86,3 +86,12 @@ class ModelTrainerconfig:
                                                          training_pipeline.MODEL_FILE_NAME)
         self.exepted_accuracy: float = training_pipeline.MODEL_TRAINER_EXPECTED_SCORE
         self.overfitting_underfitting_threshold: float = training_pipeline.MODEL_TRAINER_OVER_FITING_UNDER_FITING_THRESHOLD
+        
+        
+class ModelEvauationConfig:
+    def __init__(self, training_pipeline_config:TrainingPipelineConfig):
+        self.model_evaluation_dir : str = os.path.join(
+            training_pipeline_config.artifact_dir, training_pipeline.MODEL_EVALUATION_DIR_NAME
+        )
+        self.report_file_path = os.path.join(self.model_evaluation_dir,training_pipeline.MODEL_EVALUATION_REPORT_FILE_NAME)
+        self.changed_thredsold: float = training_pipeline.MODEL_EVALUTION_CHANGED_THRESHOLD_SCORE

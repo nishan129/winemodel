@@ -1,5 +1,5 @@
 import os
-
+SAVED_MODEL_DIR = os.path.join("saved_models")
 # define common constant variable for training pipeline
 TARGET_COLUMN = 'quality'
 PIPELINE_NAME = 'src'
@@ -48,3 +48,10 @@ MODEL_TRAINER_TRAINED_MODEL_DIR: str = 'trained_models'
 MODEL_TRAINER_TRAINED_MODEL_NAME: str = "model.pkl"
 MODEL_TRAINER_EXPECTED_SCORE: float = 0.6
 MODEL_TRAINER_OVER_FITING_UNDER_FITING_THRESHOLD: float = 0.02
+
+"""
+Model Evaluation related constant start with MODEL Evaluation VAR NAME
+"""
+MODEL_EVALUATION_DIR_NAME: str = "model_evaluation"
+MODEL_EVALUTION_CHANGED_THRESHOLD_SCORE: float = 0.02
+MODEL_EVALUATION_REPORT_FILE_NAME = 'report.yaml'
