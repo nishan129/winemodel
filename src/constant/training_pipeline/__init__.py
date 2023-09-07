@@ -44,9 +44,10 @@ DATA_TRANSFORMATION_TRANSFORMED_DIR: str = 'transformed_objects'
 Model Trainer related constant start with MODEL TRAINER VAR NAME
 """
 MODEL_TRAINER_DIR_NAME: str = "model_trainer"
-MODEL_TRAINER_TRAINED_MODEL_DIR: str = 'trained_models'
+MODEL_TRAINER_TRAINED_MODEL_DIR: str = 'trained_model'
 MODEL_TRAINER_TRAINED_MODEL_NAME: str = "model.pkl"
 MODEL_TRAINER_EXPECTED_SCORE: float = 0.6
+MODEL_TRAINER_OVER_FITING : float = 0.6
 MODEL_TRAINER_OVER_FITING_UNDER_FITING_THRESHOLD: float = 0.02
 
 """
@@ -55,3 +56,9 @@ Model Evaluation related constant start with MODEL Evaluation VAR NAME
 MODEL_EVALUATION_DIR_NAME: str = "model_evaluation"
 MODEL_EVALUTION_CHANGED_THRESHOLD_SCORE: float = 0.02
 MODEL_EVALUATION_REPORT_FILE_NAME = 'report.yaml'
+
+"""
+Model Push
+    """
+MODEL_PUSHER_DIR_NAME:str = "model_pusher"
+MODEL_PUSHER_SAVED_MODEL_DIR = SAVED_MODEL_DIR

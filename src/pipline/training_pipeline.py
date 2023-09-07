@@ -61,6 +61,7 @@ class TrainPipeline:
             model_trainer = ModelTrainer(model_trainer_config=model_trainer_config,
                                          data_transformation_artifact=data_transformation_artifact)
             model_trainer_artifact = model_trainer.initiate_model_trainer()
+            return model_trainer_artifact
         except Exception as e:
             raise ModelException(e,sys)
         

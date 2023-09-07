@@ -39,7 +39,7 @@ class ModelEvaluation:
             df.drop(TARGET_COLUMN,axis=1,inplace=True)
             #df.drop(TARGET_COLUMN,axis=1,inplace=True)
 
-            train_model_file_path = self.model_trainer_artifact.trained_model_file_path
+            train_model_file_path = self.model_trainer_artifact.trained_model_file_path#'artifact/09_07_2023_13_50_20/model_trainer/trained_models/model.pkl'
             model_resolver = ModelResolver()
             is_model_accepted=True
 
@@ -47,10 +47,11 @@ class ModelEvaluation:
             if not model_resolver.is_model_exists():
                 model_evaluation_artifact = ModelEvaluationArtifact(
                     is_model_accepted=is_model_accepted, 
-                    imporved_accuracy=None, 
+                    imporved_accuracy =None,
+                    #changed_accuracy = None, 
                     best_model_path=None, 
                     trained_model_path=train_model_file_path, 
-                    train_model_metric_artifact=self.model_trainer_artifact.test_metric_artifact, 
+                    train_model_metric_artifact=self.model_trainer_artifact.train_metric_artifact,
                     best_model_metric_artifact=None)
                 logging.info(f"Model evaluation artifact: {model_evaluation_artifact}")
                 return model_evaluation_artifact

@@ -95,3 +95,16 @@ class ModelEvauationConfig:
         )
         self.report_file_path = os.path.join(self.model_evaluation_dir,training_pipeline.MODEL_EVALUATION_REPORT_FILE_NAME)
         self.changed_thredsold: float = training_pipeline.MODEL_EVALUTION_CHANGED_THRESHOLD_SCORE
+        
+        
+class ModelPusherConfig:
+    
+    def __init__(self,trainig_pipeline_config: TrainingPipelineConfig):
+        self.model_evaluation_dir: str = os.path.join(
+            trainig_pipeline_config.artifact_dir, training_pipeline.MODEL_PUSHER_DIR_NAME)
+        self.model_file_path = os.path.join(self.model_evaluation_dir,training_pipeline.MODEL_PUSHER_SAVED_MODEL_DIR)
+        timestamp = round(datetime.now().timestamp())
+        self.save_model_path = os.path.join(
+            training_pipeline.SAVED_MODEL_DIR,
+            f"{timestamp}",
+            training_pipeline.MODEL_FILE_NAME )

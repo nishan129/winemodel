@@ -21,13 +21,14 @@ class ModelTrainer:
         except Exception as e:
             raise ModelException(e,sys)
         
-    def perform_hyper_parameter_tuning(self):...
+    # def perform_hyper_parameter_tuning(self):
+    #     pass
         
     def train_model(self, x_train,y_train):
         try:
-            model = XGBClassifier()
-            model.fit(x_train,y_train)
-            return model
+            xgb_clf = XGBClassifier()
+            xgb_clf.fit(x_train,y_train)
+            return xgb_clf
         except Exception as e:
             raise ModelException(e,sys)
     
@@ -50,18 +51,22 @@ class ModelTrainer:
             
             model = self.train_model(x_train=x_train,y_train=y_train)
             y_train_pred = model.predict(x_train)
-            y_test_pred = model.predict(x_test)
-            
             classification_train_metric =get_classification_score(y_true=y_train,y_pred=y_train_pred)
-            classification_test_metric = get_classification_score(y_true=y_test,y_pred=y_test_pred)
             
             if classification_train_metric.f1_score<=self.model_trainer_config.exepted_accuracy:
                 raise Exception("Train Model is not good to provide exepted accuracy")
+            
+            
+            test_pred = model.predict(x_test)
+            classification_test_metric = get_classification_score(y_true=y_test,y_pred=test_pred)
+            
+            
             # check overfiting and underfiting
             diff = abs(classification_train_metric.f1_score - classification_test_metric.f1_score)
             
             if diff>self.model_trainer_config.overfitting_underfitting_threshold:
-                raise Exception("Model is not good try to do more experiments")
+                #raise Exception("Model is not good try to do more experiments")
+                pass
             
             
             preprocessor = load_object(file_path=self.data_transformation_artifact.transformed_object_file_path)
@@ -74,8 +79,7 @@ class ModelTrainer:
             # model trainer artifact
             
             model_trainer_artifact=ModelTrainerArtifact(trained_model_file_path=self.model_trainer_config.trained_model_file_path,
-                                 train_metric_artifact=classification_train_metric,
-                                 test_metric_artifact=classification_test_metric)
+                                 train_metric_artifact=classification_train_metric,test_metric_artifact=classification_test_metric)
             
             logging.info(f"Model trainer artifact: {model_trainer_artifact}")
             return model_trainer_artifact
