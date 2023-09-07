@@ -65,8 +65,8 @@ class ModelTrainer:
             diff = abs(classification_train_metric.f1_score - classification_test_metric.f1_score)
             
             if diff>self.model_trainer_config.overfitting_underfitting_threshold:
-                #raise Exception("Model is not good try to do more experiments")
-                pass
+                raise Exception("Model is not good try to do more experiments")
+                
             
             
             preprocessor = load_object(file_path=self.data_transformation_artifact.transformed_object_file_path)

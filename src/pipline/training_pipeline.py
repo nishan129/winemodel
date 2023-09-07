@@ -1,13 +1,14 @@
-from src.entity.config_entity import TrainingPipelineConfig, DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainerconfig, ModelEvauationConfig
+from src.entity.config_entity import TrainingPipelineConfig, DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainerconfig, ModelEvauationConfig, ModelPusherConfig
 from src.exception import ModelException
 import sys
 from src.logger import logging
-from src.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact, DataTransformationArtifact, ModelTrainerArtifact, ModelEvaluationArtifact
+from src.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact, DataTransformationArtifact, ModelTrainerArtifact, ModelEvaluationArtifact, ModelPusherArtifact
 from src.components.data_ingestion import DataIngenstion
 from src.components.data_validation import DataValidationArtifact, DataValidation
 from src.components.data_transformation import DataTransformation
 from src.components.model_trainer import ModelTrainer
 from src.components.model_evaluation import ModelEvaluation
+from src.components.model_pusher import ModelPusher
 class TrainPipeline:
     
     def __init__(self):
@@ -79,9 +80,13 @@ class TrainPipeline:
             raise ModelException(e,sys)
         
         
-    def start_model_pusher(self):
+    def start_model_pusher(self,model_evaluation_artifact:ModelEvaluationArtifact):
         try:
-            pass
+            model_pusher_config = ModelPusherConfig(trainig_pipeline_config=self.training_pipeline_config)
+            model_pusher = ModelPusher(model_pusher_config=model_pusher_config,
+                                       model_eval_artifact=model_evaluation_artifact)
+            model_pusher_artifact = model_pusher.initiate_model_pusher()
+            return model_pusher_artifact
         except Exception as e:
             raise ModelException(e,sys)
           
@@ -94,5 +99,6 @@ class TrainPipeline:
             model_trainer_artifact = self.start_model_trainer(data_transformation_artifact)
             model_evaluation_artifact = self.start_model_evaluation(data_validation_artifact=data_validation_artifact,
                                                                     model_trainer_artifact=model_trainer_artifact)
+            model_pusher_artifact = self.start_model_pusher(model_evaluation_artifact=model_evaluation_artifact)
         except Exception as e:
             raise ModelException(e,sys)

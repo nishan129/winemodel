@@ -9,4 +9,6 @@ PyYAML
 xgboost
 dill
 imblearn == 0.0
+uvicorn
+fastapi
 -e .
