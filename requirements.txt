@@ -10,5 +10,6 @@ xgboost
 dill
 imblearn == 0.0
 uvicorn
+flask
 fastapi
 -e .
