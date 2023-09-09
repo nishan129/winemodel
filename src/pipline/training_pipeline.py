@@ -9,6 +9,9 @@ from src.components.data_transformation import DataTransformation
 from src.components.model_trainer import ModelTrainer
 from src.components.model_evaluation import ModelEvaluation
 from src.components.model_pusher import ModelPusher
+from src.constant.s3_bucket import TRAINING_BUCKET_NAME
+from src.cloud_storage.s3_syncer import S3Sync
+from src.constant.training_pipeline import SAVED_MODEL_DIR
 class TrainPipeline:
     
     def __init__(self):
@@ -90,7 +93,19 @@ class TrainPipeline:
         except Exception as e:
             raise ModelException(e,sys)
           
-          
+    def sync_artifact_dir_to_s3(self):
+        try:
+            aws_buket_url = f"s3://{TRAINING_BUCKET_NAME}/artifact/{self.training_pipeline_config.timestamp}"
+            S3Sync.sync_folder_to_s3(folder=self.training_pipeline_config.artifact_dir,aws_bucket_url=aws_buket_url)
+        except Exception as e:
+            raise ModelException(e,sys)
+    def sync_saved_model_dir_to_s3(self):
+        try:
+            aws_buket_url = f"s3://{TRAINING_BUCKET_NAME}/{SAVED_MODEL_DIR}"
+            S3Sync.sync_folder_to_s3(folder=SAVED_MODEL_DIR, aws_bucket_url=aws_buket_url)
+        except Exception as e:
+            raise ModelException(e,sys)   
+           
     def run_pipeline(self):
         try:
             TrainPipeline.is_pipeline_running = True
@@ -108,6 +123,10 @@ class TrainPipeline:
             model_pusher_artifact = self.start_model_pusher(model_evaluation_artifact=model_evaluation_artifact)
             
             TrainPipeline.is_pipeline_running= False
+                        
+            self.sync_artifact_dir_to_s3()
+            self.sync_saved_model_dir_to_s3()
+            
         except Exception as e:
             TrainPipeline.is_pipeline_running= False
             raise ModelException(e,sys)
