@@ -3,7 +3,7 @@ from src.logger import logging
 from src.constant.application import APP_HOST, APP_PORT
 from src.pipline.predict_pipeline import CustomData, PredictionPipeline
 from flask import Flask,request,render_template
-
+from src.pipline.training_pipeline import TrainPipeline
 
 from flask import Flask,request,render_template
 
@@ -15,6 +15,19 @@ app = application
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route("/train",methods=['GET'])
+def model_train():
+    try:
+        train_pipeline = TrainPipeline()
+        #if train_pipeline.is_pipeline_running:
+            #return render_template('train.html',train="Training pipeline is already running.")
+        train_pipeline.run_pipeline()
+        return render_template('train.html',train="Training successful !!")
+    except Exception as e:
+        return render_template('train.html',train=f"Error Occurred! {e}")
+
+
 
 @app.route('/predictdata',methods=['GET','POST'])
 def predict_datapoint():
