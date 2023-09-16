@@ -10,7 +10,6 @@ from flask import Flask,request,render_template
 application = Flask(__name__)
 
 app = application
-
 ## routes for home page
 @app.route('/')
 def index():
