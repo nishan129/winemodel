@@ -1,2 +1,2 @@
-TRAINING_BUCKET_NAME = 'wine-data-model-bucket'
-PREDICTION_BUCKET_NAME ='wine-datasource'
+TRAINING_BUCKET_NAME = 'wine-model-jolo-33'
+PREDICTION_BUCKET_NAME ='wine-model-jolo-33
